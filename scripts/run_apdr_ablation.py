@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -32,6 +33,12 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
+    env = os.environ.copy()
+    env["PYTHONDONTWRITEBYTECODE"] = "1"
+    for audit in ("audit_repository_cleanliness.py", "audit_fairness.py"):
+        audit_cmd = [sys.executable, str(PROJECT_ROOT / "tools" / audit)]
+        print("[RUN]", " ".join(audit_cmd))
+        subprocess.run(audit_cmd, cwd=PROJECT_ROOT, env=env, check=True)
     cmd = [
         sys.executable,
         str(PROJECT_ROOT / "scripts" / "benchmark_all.py"),
@@ -55,7 +62,7 @@ def main() -> None:
     if args.allow_insecure_download:
         cmd.append("--allow-insecure-download")
     print("[RUN]", " ".join(cmd))
-    subprocess.run(cmd, check=True)
+    subprocess.run(cmd, cwd=PROJECT_ROOT, env=env, check=True)
 
 
 if __name__ == "__main__":

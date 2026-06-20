@@ -11,7 +11,7 @@ python -m pip install -q --upgrade pip setuptools wheel
 python -m pip install -q -r requirements.txt
 python -m pip install -q pytest certifi
 
-python scripts/run_two_proposal_comparison.py \
+python scripts/run_baseline_proposal_comparison.py \
   --dataset etis \
   --data-root data \
   --image-size 352 \
@@ -21,6 +21,7 @@ python scripts/run_two_proposal_comparison.py \
   --device cuda \
   --num-workers 2 \
   --seeds 42,1,2 \
-  --output-root outputs_apdr_ablation/etis \
+  --config-dir configs/fair \
+  --output-root outputs_baseline_proposal/etis \
   --allow-insecure-download \
   --delete-checkpoints-after-eval

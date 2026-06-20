@@ -8,7 +8,12 @@ import sys
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-MODELS = ['unet', 'unetpp', 'attention_unet', 'pranet', 'acsnet', 'hardnet_mseg', 'cfanet', 'polyp_pvt', 'caranet', 'hsnet', 'resunetpp', 'plain_fourier_unet', 'apdr_fourier_unet']
+try:
+    from .model_sets import FAIR_MODELS
+except ImportError:  # Direct script execution
+    from model_sets import FAIR_MODELS
+
+MODELS = FAIR_MODELS
 
 def main() -> None:
     cmd = [

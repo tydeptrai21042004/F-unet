@@ -8,7 +8,12 @@ import sys
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-MODELS = ['unet', 'unetpp', 'attention_unet', 'pranet', 'acsnet', 'hardnet_mseg', 'cfanet', 'polyp_pvt', 'caranet', 'hsnet', 'resunetpp']
+try:
+    from .model_sets import BASELINE_MODELS
+except ImportError:  # Direct script execution
+    from model_sets import BASELINE_MODELS
+
+MODELS = BASELINE_MODELS
 
 def main() -> None:
     cmd = [

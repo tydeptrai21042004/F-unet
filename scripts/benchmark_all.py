@@ -9,13 +9,17 @@ import sys
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+try:
+    from .model_sets import FAIR_MODELS
+except ImportError:  # Direct script execution
+    from model_sets import FAIR_MODELS
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.datasets import get_dataset_spec, normalize_dataset_name
 from src.utils import resolve_device
 
-DEFAULT_MODELS = "unet,unetpp,attention_unet,pranet,acsnet,hardnet_mseg,cfanet,polyp_pvt,caranet,hsnet,resunetpp,plain_fourier_unet,apdr_fourier_unet"
+DEFAULT_MODELS = ",".join(FAIR_MODELS)
 
 
 def parse_args() -> argparse.Namespace:
