@@ -15,7 +15,17 @@ BASELINES = {
     "resunetpp",
 }
 PROPOSALS = {"plain_fourier_unet", "apdr_fourier_unet"}
-ALL = BASELINES | PROPOSALS
+FULL_ABLATION = {
+    "unet", "plain_fourier_amplitude_only", "plain_fourier_phase_only",
+    "plain_fourier_no_channel_mix", "plain_fourier_no_residual",
+    "plain_fourier_unet", "apdr_uniform_route",
+    "apdr_no_disagreement", "apdr_no_uncertainty",
+    "apdr_no_boundary", "apdr_no_context",
+    "apdr_local_amplitude_only", "apdr_local_phase_only",
+    "apdr_fourier_unet",
+}
+CANONICAL = BASELINES | PROPOSALS
+REGISTRY_MODELS = CANONICAL | FULL_ABLATION
 
 
 def load(path: Path) -> dict:
@@ -23,16 +33,17 @@ def load(path: Path) -> dict:
 
 
 def test_registry_contains_only_requested_models() -> None:
-    assert set(MODEL_REGISTRY) == ALL
+    assert set(MODEL_REGISTRY) == REGISTRY_MODELS
 
 
 def test_config_directories_have_exact_scope() -> None:
     assert {p.name for p in CONFIGS.iterdir() if p.is_dir()} == {
-        "official_faithful", "fair", "ablation"
+        "official_faithful", "fair", "ablation", "full_component_ablation"
     }
     assert {p.stem for p in (CONFIGS / "official_faithful").glob("*.yaml")} == BASELINES
-    assert {p.stem for p in (CONFIGS / "fair").glob("*.yaml")} == ALL
+    assert {p.stem for p in (CONFIGS / "fair").glob("*.yaml")} == CANONICAL
     assert {p.stem for p in (CONFIGS / "ablation").glob("*.yaml")} == PROPOSALS
+    assert {p.stem for p in (CONFIGS / "full_component_ablation").glob("*.yaml")} == FULL_ABLATION
 
 
 def test_all_fair_configs_share_the_same_training_and_evaluation_protocol() -> None:

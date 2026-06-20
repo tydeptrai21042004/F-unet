@@ -95,3 +95,15 @@ bash run.sh fair
 The exact retained manuscript baseline rows are in
 `docs/manuscript_baselines.tex`. A manuscript-ready two-proposal ablation and
 ISBI-2012 dataset fragment is in `docs/manuscript_two_proposals.tex`.
+
+## Permanent full component ablation
+
+The repository includes a source-integrated 14-model ablation for the two proposed methods. The architecture variants live in `src/models/proposal/full_ablation_variants.py`, their fixed configurations live in `configs/full_component_ablation/`, and all aggregation/reporting logic is implemented as reusable scripts rather than notebook-time patches.
+
+Run the ETIS study over seeds 42, 1, and 2 with:
+
+```bash
+bash scripts/kaggle_full_component_ablation_etis_3seeds.sh
+```
+
+For a fresh Kaggle clone, use the commands in `KAGGLE_FULL_COMPONENT_ABLATION_CELL.sh`.
