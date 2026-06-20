@@ -1,0 +1,51 @@
+% ============================================================
+% TWO PROPOSED METHODS AND CONTROLLED ABLATION
+% ============================================================
+
+\paragraph{Proposed Plain Fourier U-Net.}
+The first proposed method, denoted by \texttt{plain\_fourier\_unet},
+introduces an identity-initialized Fourier bottleneck into the U-Net
+architecture. The bottleneck jointly learns bounded amplitude and phase
+corrections while retaining a residual spatial path.
+
+\paragraph{Proposed APDR-Fourier U-Net.}
+The second proposed method, denoted by \texttt{apdr\_fourier\_unet}, extends
+the complete Plain Fourier U-Net path by a zero-initialized
+amplitude--phase disagreement-routed residual adapter. Thus,
+\[
+\mathrm{APDR\text{-}Fourier\ U\text{-}Net}
+=
+\mathrm{Plain\ Fourier\ U\text{-}Net}
++
+\mathrm{APDR\ residual\ adapter}.
+\]
+Because the residual gate is initialized at zero, both proposed methods produce
+identical logits at initialization. The controlled ablation uses the same data
+split, augmentation, optimizer, learning rate, loss, number of epochs,
+threshold, and random seeds; hence, it isolates the contribution of the APDR
+adapter.
+
+\begin{table}[htbp]
+\centering
+\caption{Controlled ablation of the two proposed Fourier U-Net methods.}
+\label{tab:two-proposal-ablation}
+\begin{tabular}{lcc}
+\hline
+Method & Plain Fourier path & APDR residual adapter \\
+\hline
+Plain Fourier U-Net (Proposal I) & \checkmark & -- \\
+APDR-Fourier U-Net (Proposal II) & \checkmark & \checkmark \\
+\hline
+\end{tabular}
+\end{table}
+
+% ============================================================
+% RETAINED CHALLENGE DATASET
+% ============================================================
+
+\paragraph{ISBI-2012 challenge.}
+The ISBI-2012 neuronal-structure electron-microscopy dataset is retained as a
+supported challenge dataset. Since the public challenge test volume does not
+provide ground-truth labels, the supervised experiments use the 30 labeled
+training slices and construct a reproducible contiguous train--validation--test
+split to reduce leakage between adjacent slices.
