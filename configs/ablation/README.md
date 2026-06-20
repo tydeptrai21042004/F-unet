@@ -10,3 +10,7 @@ zero-initialized amplitude–phase disagreement-routed residual adapter. The dat
 split, augmentation, optimization, loss, epoch count, threshold, and
 deterministic settings are identical. Consequently, the comparison isolates the
 incremental contribution of the APDR adapter.
+
+3. `dapr_baf_unet.yaml` — **Proposal III: DAPR-BAF U-Net**, using direct
+   global amplitude--phase reconstruction and boundary-guided overlapping
+   local amplitude refinement.
