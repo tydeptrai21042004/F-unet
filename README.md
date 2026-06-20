@@ -107,3 +107,40 @@ bash scripts/kaggle_full_component_ablation_etis_3seeds.sh
 ```
 
 For a fresh Kaggle clone, use the commands in `KAGGLE_FULL_COMPONENT_ABLATION_CELL.sh`.
+
+## Eleven-baseline versus two-proposal comparison
+
+The permanent fair comparison uses all eleven retained baselines and both
+proposed methods under the same ETIS split and training/evaluation protocol:
+
+```bash
+bash scripts/kaggle_baseline_proposal_etis_3seeds.sh
+```
+
+The reusable Python entrypoint is:
+
+```bash
+python scripts/run_baseline_proposal_comparison.py \
+  --dataset etis \
+  --device cuda \
+  --seeds 42,1,2 \
+  --allow-insecure-download
+```
+
+See `docs/BASELINE_PROPOSAL_COMPARISON_GUIDE.md` for generated files and
+reporting details.
+
+## Baseline and repository audits
+
+```bash
+python tools/audit_baseline_proposal_comparison.py
+python tools/audit_baseline_implementations.py
+python tools/audit_repository_cleanliness.py
+```
+
+Generated caches and binary artifacts can be previewed or removed with:
+
+```bash
+python scripts/clean_repository_artifacts.py
+python scripts/clean_repository_artifacts.py --apply
+```

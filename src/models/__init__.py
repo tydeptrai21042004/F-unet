@@ -21,6 +21,20 @@ from .proposal.apdr_fourier_unet import (
     WindowedFourierResidualAdapter,
 )
 
+from .proposal.full_ablation_variants import (
+    APDRLocalAmplitudeOnly,
+    APDRLocalPhaseOnly,
+    APDRNoBoundary,
+    APDRNoContext,
+    APDRNoDisagreement,
+    APDRNoUncertainty,
+    APDRUniformRoute,
+    PlainFourierAmplitudeOnly,
+    PlainFourierNoChannelMix,
+    PlainFourierNoResidual,
+    PlainFourierPhaseOnly,
+)
+
 __all__ = [
     "build_model",
     "UNet",
@@ -49,4 +63,15 @@ __all__ = [
     "WindowedFourierResidualAdapter",
     "APDRResidualAdapter",
     "APDRFourierUNet",
+    "PlainFourierAmplitudeOnly",
+    "PlainFourierPhaseOnly",
+    "PlainFourierNoChannelMix",
+    "PlainFourierNoResidual",
+    "APDRUniformRoute",
+    "APDRNoDisagreement",
+    "APDRNoUncertainty",
+    "APDRNoBoundary",
+    "APDRNoContext",
+    "APDRLocalAmplitudeOnly",
+    "APDRLocalPhaseOnly",
 ]

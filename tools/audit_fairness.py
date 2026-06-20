@@ -1,18 +1,21 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 from typing import Any
 
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
+SCRIPTS_DIR = ROOT / "scripts"
+if str(SCRIPTS_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPTS_DIR))
+
+from baseline_proposal_spec import BASELINE_PROPOSAL_MODELS
+
 CONFIG_DIR = ROOT / "configs" / "fair"
-MODELS = [
-    "unet", "unetpp", "attention_unet", "pranet", "acsnet",
-    "hardnet_mseg", "cfanet", "polyp_pvt", "caranet", "hsnet",
-    "resunetpp", "plain_fourier_unet", "apdr_fourier_unet",
-]
+MODELS = BASELINE_PROPOSAL_MODELS
 SHARED_PATHS = [
     ("data", "augmentation"), ("data", "batch_size"),
     ("data", "image_size"), ("data", "num_workers"),
