@@ -17,6 +17,7 @@ BASELINE_MODELS = [
 PROPOSAL_MODELS = [
     "plain_fourier_unet",
     "apdr_fourier_unet",
+    "dapr_baf_unet",
 ]
 
 FAIR_MODELS = BASELINE_MODELS + PROPOSAL_MODELS

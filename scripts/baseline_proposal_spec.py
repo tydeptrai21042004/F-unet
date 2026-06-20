@@ -19,6 +19,7 @@ BASELINE_MODELS = [
 PROPOSAL_MODELS = [
     "plain_fourier_unet",
     "apdr_fourier_unet",
+    "dapr_baf_unet",
 ]
 
 BASELINE_PROPOSAL_MODELS = BASELINE_MODELS + PROPOSAL_MODELS
@@ -39,6 +40,7 @@ DISPLAY_NAMES = {
     "resunetpp": "ResUNet++",
     "plain_fourier_unet": "Proposal I: Plain Fourier U-Net",
     "apdr_fourier_unet": "Proposal II: APDR-Fourier U-Net",
+    "dapr_baf_unet": "Proposal III: DAPR-BAF U-Net",
 }
 
 GROUPS = {

@@ -4,6 +4,19 @@ from .apdr_fourier_unet import (
     APDRResidualAdapter,
     WindowedFourierResidualAdapter,
 )
+from .dapr_baf_unet import (
+    BoundaryGuidedAmplitudeRefiner,
+    DAPRBAFUNet,
+    OverlappingAmplitudeResidualAdapter,
+)
+from .dapr_baf_ablation_variants import (
+    DAPRBAFNoGlobalChannelMix,
+    DAPRBAFNoGlobalPhase,
+    DAPRBAFNoLocalChannelMix,
+    DAPRBAFNonOverlapping,
+    DAPRBAFUniformRoute,
+    DAPRDirectUNet,
+)
 
 __all__ = [
     "FourierSpectralBottleneck",
@@ -11,6 +24,15 @@ __all__ = [
     "WindowedFourierResidualAdapter",
     "APDRResidualAdapter",
     "APDRFourierUNet",
+    "OverlappingAmplitudeResidualAdapter",
+    "BoundaryGuidedAmplitudeRefiner",
+    "DAPRBAFUNet",
+    "DAPRDirectUNet",
+    "DAPRBAFUniformRoute",
+    "DAPRBAFNonOverlapping",
+    "DAPRBAFNoGlobalPhase",
+    "DAPRBAFNoGlobalChannelMix",
+    "DAPRBAFNoLocalChannelMix",
     "PlainFourierAmplitudeOnly",
     "PlainFourierPhaseOnly",
     "PlainFourierNoChannelMix",

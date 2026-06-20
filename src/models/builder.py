@@ -20,6 +20,8 @@ ALIASES = {
     "plain_fourier": "plain_fourier_unet",
     "apdr": "apdr_fourier_unet",
     "apdr_unet": "apdr_fourier_unet",
+    "dapr": "dapr_baf_unet",
+    "dapr_baf": "dapr_baf_unet",
 }
 
 

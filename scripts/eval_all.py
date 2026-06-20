@@ -22,6 +22,7 @@ DEFAULT_MODELS = [
     "resunetpp",
     "plain_fourier_unet",
     "apdr_fourier_unet",
+    "dapr_baf_unet",
 ]
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 

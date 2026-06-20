@@ -13,12 +13,26 @@ from .baselines.resunetpp import ResUNetPlusPlus, ResUNetPPAttentionGate, ResUNe
 from .baselines.unet import UNet
 from .baselines.unetpp import UNetPlusPlus
 
-# The two retained spectral proposal methods are registered below.
+# The registered spectral proposal methods are imported below.
 from .proposal.fourier_unet import FourierSpectralBottleneck, PlainFourierUNet
 from .proposal.apdr_fourier_unet import (
     APDRFourierUNet,
     APDRResidualAdapter,
     WindowedFourierResidualAdapter,
+)
+from .proposal.dapr_baf_unet import (
+    BoundaryGuidedAmplitudeRefiner,
+    DAPRBAFUNet,
+    OverlappingAmplitudeResidualAdapter,
+)
+
+from .proposal.dapr_baf_ablation_variants import (
+    DAPRBAFNoGlobalChannelMix,
+    DAPRBAFNoGlobalPhase,
+    DAPRBAFNoLocalChannelMix,
+    DAPRBAFNonOverlapping,
+    DAPRBAFUniformRoute,
+    DAPRDirectUNet,
 )
 
 from .proposal.full_ablation_variants import (
@@ -63,6 +77,15 @@ __all__ = [
     "WindowedFourierResidualAdapter",
     "APDRResidualAdapter",
     "APDRFourierUNet",
+    "OverlappingAmplitudeResidualAdapter",
+    "BoundaryGuidedAmplitudeRefiner",
+    "DAPRBAFUNet",
+    "DAPRDirectUNet",
+    "DAPRBAFUniformRoute",
+    "DAPRBAFNonOverlapping",
+    "DAPRBAFNoGlobalPhase",
+    "DAPRBAFNoGlobalChannelMix",
+    "DAPRBAFNoLocalChannelMix",
     "PlainFourierAmplitudeOnly",
     "PlainFourierPhaseOnly",
     "PlainFourierNoChannelMix",
