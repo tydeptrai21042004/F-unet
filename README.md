@@ -47,7 +47,7 @@ See `APDR_FOURIER_UNET_GUIDE.md` for the architecture.
 
 ### Proposed methods
 
-`plain_fourier_unet`, `apdr_fourier_unet`.
+`plain_fourier_unet`, `apdr_fourier_unet`, and `dapr_baf_unet`.
 
 ## Dataset support
 

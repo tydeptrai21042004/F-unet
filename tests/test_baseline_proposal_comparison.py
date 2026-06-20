@@ -33,8 +33,8 @@ def test_exact_baseline_and_proposal_scope() -> None:
         "hsnet",
         "resunetpp",
     ]
-    assert PROPOSAL_MODELS == ["plain_fourier_unet", "apdr_fourier_unet"]
-    assert len(BASELINE_PROPOSAL_MODELS) == 13
+    assert PROPOSAL_MODELS == ["plain_fourier_unet", "apdr_fourier_unet", "dapr_baf_unet"]
+    assert len(BASELINE_PROPOSAL_MODELS) == 14
 
 
 def test_fair_config_directory_matches_comparison_scope_and_protocol() -> None:
@@ -120,7 +120,9 @@ def test_reporting_script_supports_complete_comparison(tmp_path: Path) -> None:
     )
     assert latex.is_file()
     assert delta.is_file()
-    assert "APDR-Fourier U-Net" in latex.read_text(encoding="utf-8")
+    latex_text = latex.read_text(encoding="utf-8")
+    assert "APDR-Fourier U-Net" in latex_text
+    assert "DAPR-BAF U-Net" in latex_text
     with delta.open("r", encoding="utf-8") as file:
         rows = list(csv.DictReader(file))
     assert len(rows) == len(PROPOSAL_MODELS) * 6

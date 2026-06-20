@@ -34,6 +34,7 @@ ALL_RUNNABLE_MODELS = [
     "resunetpp",
     "plain_fourier_unet",
     "apdr_fourier_unet",
+    "dapr_baf_unet",
 ]
 GRAD_RUNNABLE_MODELS = list(ALL_RUNNABLE_MODELS)
 
@@ -66,8 +67,11 @@ def _load_cfg(config_dir: Path, name: str):
 def _fast_test_cfg(model_name: str, cfg: dict):
     cfg = dict(cfg)
     model_cfg = dict(cfg["model"])
-    if model_name in {"attention_unet", "plain_fourier_unet", "apdr_fourier_unet"}:
+    if model_name in {"attention_unet", "plain_fourier_unet", "apdr_fourier_unet", "dapr_baf_unet"}:
         model_cfg["channels"] = [2, 4, 8, 16, 32]
+    if model_name == "dapr_baf_unet":
+        model_cfg["baf_window_size"] = 8
+        model_cfg["baf_stride"] = 4
     cfg["model"] = model_cfg
     return cfg
 

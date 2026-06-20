@@ -27,25 +27,32 @@ from src.models.common.paper_baselines import (
 )
 from src.models.proposal.apdr_fourier_unet import APDRResidualAdapter
 from src.models.proposal.fourier_unet import FourierSpectralBottleneck
+from src.models.proposal.dapr_baf_unet import (
+    BoundaryGuidedAmplitudeRefiner,
+    OverlappingAmplitudeResidualAdapter,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG_DIR = ROOT / "configs" / "fair"
 MODELS = [
     "unet", "unetpp", "attention_unet", "pranet", "acsnet",
     "hardnet_mseg", "cfanet", "polyp_pvt", "caranet", "hsnet",
-    "resunetpp", "plain_fourier_unet", "apdr_fourier_unet",
+    "resunetpp", "plain_fourier_unet", "apdr_fourier_unet", "dapr_baf_unet",
 ]
 
 
 def _cfg(name: str) -> dict:
     cfg = yaml.safe_load((CONFIG_DIR / f"{name}.yaml").read_text())
     model_cfg = dict(cfg["model"])
-    if name in {"attention_unet", "plain_fourier_unet", "apdr_fourier_unet"}:
+    if name in {"attention_unet", "plain_fourier_unet", "apdr_fourier_unet", "dapr_baf_unet"}:
         model_cfg["channels"] = [2, 4, 8, 16, 32]
-    if name in {"plain_fourier_unet", "apdr_fourier_unet"}:
+    if name in {"plain_fourier_unet", "apdr_fourier_unet", "dapr_baf_unet"}:
         model_cfg["fourier_init_hw"] = [2, 2]
     if name == "apdr_fourier_unet":
         model_cfg["apdr_window_size"] = 8
+    if name == "dapr_baf_unet":
+        model_cfg["baf_window_size"] = 8
+        model_cfg["baf_stride"] = 4
     return model_cfg
 
 
@@ -61,6 +68,11 @@ CONTRACTS = {
     "resunetpp": (ResidualBlock, SqueezeExcitation, ASPP, ResUNetPPAttentionGate, ResUNetPPDecoderBlock),
     "plain_fourier_unet": (FourierSpectralBottleneck,),
     "apdr_fourier_unet": (FourierSpectralBottleneck, APDRResidualAdapter),
+    "dapr_baf_unet": (
+        FourierSpectralBottleneck,
+        BoundaryGuidedAmplitudeRefiner,
+        OverlappingAmplitudeResidualAdapter,
+    ),
 }
 
 

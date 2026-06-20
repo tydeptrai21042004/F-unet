@@ -14,7 +14,7 @@ BASELINES = {
     "hardnet_mseg", "cfanet", "polyp_pvt", "caranet", "hsnet",
     "resunetpp",
 }
-PROPOSALS = {"plain_fourier_unet", "apdr_fourier_unet"}
+PROPOSALS = {"plain_fourier_unet", "apdr_fourier_unet", "dapr_baf_unet"}
 FULL_ABLATION = {
     "unet", "plain_fourier_amplitude_only", "plain_fourier_phase_only",
     "plain_fourier_no_channel_mix", "plain_fourier_no_residual",
@@ -25,7 +25,13 @@ FULL_ABLATION = {
     "apdr_fourier_unet",
 }
 CANONICAL = BASELINES | PROPOSALS
-REGISTRY_MODELS = CANONICAL | FULL_ABLATION
+DAPR_BAF_ABLATION = {
+    "dapr_direct_unet", "dapr_baf_uniform_route",
+    "dapr_baf_nonoverlap", "dapr_baf_no_global_phase",
+    "dapr_baf_no_global_channel_mix", "dapr_baf_no_local_channel_mix",
+    "dapr_baf_unet",
+}
+REGISTRY_MODELS = CANONICAL | FULL_ABLATION | DAPR_BAF_ABLATION
 
 
 def load(path: Path) -> dict:
@@ -38,12 +44,14 @@ def test_registry_contains_only_requested_models() -> None:
 
 def test_config_directories_have_exact_scope() -> None:
     assert {p.name for p in CONFIGS.iterdir() if p.is_dir()} == {
-        "official_faithful", "fair", "ablation", "full_component_ablation"
+        "official_faithful", "fair", "ablation", "full_component_ablation",
+        "dapr_baf_ablation"
     }
     assert {p.stem for p in (CONFIGS / "official_faithful").glob("*.yaml")} == BASELINES
     assert {p.stem for p in (CONFIGS / "fair").glob("*.yaml")} == CANONICAL
     assert {p.stem for p in (CONFIGS / "ablation").glob("*.yaml")} == PROPOSALS
     assert {p.stem for p in (CONFIGS / "full_component_ablation").glob("*.yaml")} == FULL_ABLATION
+    assert {p.stem for p in (CONFIGS / "dapr_baf_ablation").glob("*.yaml")} == DAPR_BAF_ABLATION
 
 
 def test_all_fair_configs_share_the_same_training_and_evaluation_protocol() -> None:
@@ -93,6 +101,12 @@ def test_ablation_runner_contains_exactly_two_models() -> None:
         if isinstance(node, ast.Constant) and isinstance(node.value, str)
     ]
     assert "plain_fourier_unet,apdr_fourier_unet" in values
+    dapr_tree = ast.parse((ROOT / "scripts" / "run_dapr_baf_ablation.py").read_text(encoding="utf-8"))
+    dapr_values = [
+        node.value for node in ast.walk(dapr_tree)
+        if isinstance(node, ast.Constant) and isinstance(node.value, str)
+    ]
+    assert "configs/dapr_baf_ablation" in dapr_values
 
 
 def test_removed_proposal_names_are_absent_from_active_code() -> None:
@@ -148,6 +162,7 @@ def test_ablation_documentation_frames_both_spectral_models_as_proposals() -> No
     readme = (ROOT / "configs" / "ablation" / "README.md").read_text(encoding="utf-8")
     assert "Proposal I: Plain Fourier U-Net" in readme
     assert "Proposal II: APDR-Fourier U-Net" in readme
+    assert "Proposal III: DAPR-BAF U-Net" in readme
     assert "spectral baseline" not in readme.lower()
 
 

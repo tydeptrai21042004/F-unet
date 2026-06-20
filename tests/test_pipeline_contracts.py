@@ -33,6 +33,9 @@ def _small_config(name: str) -> dict:
     if name == "apdr_fourier_unet":
         model_cfg["apdr_window_size"] = 8
         model_cfg["apdr_warmup_epochs"] = 1
+    if name == "dapr_baf_unet":
+        model_cfg["baf_window_size"] = 8
+        model_cfg["baf_stride"] = 4
     return model_cfg
 
 
@@ -67,3 +70,7 @@ def test_plain_fourier_pipeline(tmp_path: Path) -> None:
 
 def test_apdr_fourier_pipeline(tmp_path: Path) -> None:
     _run_tiny_pipeline("apdr_fourier_unet", tmp_path)
+
+
+def test_dapr_baf_pipeline(tmp_path: Path) -> None:
+    _run_tiny_pipeline("dapr_baf_unet", tmp_path)
